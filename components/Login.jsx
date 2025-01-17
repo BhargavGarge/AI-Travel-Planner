@@ -1,5 +1,5 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import LoadingDots from "react-native-loading-dots";
@@ -7,17 +7,10 @@ import LoadingDots from "react-native-loading-dots";
 export default function Login() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true); // State to track image loading
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false); // Stop loading after 2 seconds
-    }, 2000);
-
-    return () => clearTimeout(timer); // Clear timeout when component unmounts
-  }, []);
 
   return (
-    <View>
-      {isLoading && ( // Show loading dots while image is loading
+    <View style={{ flex: 1 }}>
+      {isLoading && ( // Show loading dots while the image is loading
         <View style={styles.loadingScreen}>
           <View style={styles.dotsWrapper}>
             <LoadingDots />
@@ -30,7 +23,8 @@ export default function Login() {
           width: "100%",
           height: 400,
         }}
-        onLoad={() => setIsLoading(false)} // Set loading state to false when the image is loaded
+        onLoad={() => setIsLoading(false)} // Set loading state to false when the image is fully loaded
+        onError={() => console.error("Failed to load image")} // Optional: Handle image load failure
       />
       {!isLoading && ( // Show the rest of the content after the image has loaded
         <View style={styles.container}>
@@ -102,6 +96,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.WHITE, // Match background color for smooth transition
+    zIndex: 10,
   },
   dotsWrapper: {
     width: 100, // Adjust the width to properly fit the dots

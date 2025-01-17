@@ -1,12 +1,16 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
-import { useNavigation, useRouter } from "expo-router";
+import React, { useContext, useEffect } from "react";
 import { Colors } from "../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
+import { router, useNavigation } from "expo-router";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { CreateTripContext } from "../../context/CreateTripContext";
 export default function SearchPlace() {
-  const router = useRouter();
+  const navigation = useNavigation();
+  const { tripData, setTripData } = useContext(CreateTripContext);
+  useEffect(() => {
+    console.log(tripData);
+  }, [tripData]);
   return (
     <View
       style={{
@@ -29,14 +33,31 @@ export default function SearchPlace() {
       >
         Search & Explore
       </Text>
+
       <GooglePlacesAutocomplete
-        placeholder="Search...."
+        placeholder="Search......."
+        fetchDetails={true}
         onPress={(data, details = null) => {
-          console.log(data, details);
+          setTripData({
+            locationInfo: {
+              name: data.description,
+              coordinates: details?.geometry.location,
+              photoRef: details?.photos[0]?.photo_reference,
+              url: details?.url,
+            },
+          });
+          router.push("/create-trip/select-traveler");
         }}
         query={{
-          key: "YOUR API KEY",
+          key: "",
           language: "en",
+        }}
+        styles={{
+          textInputContainer: {
+            borderWidth: 1,
+            borderRadius: 5,
+            marginTop: 25,
+          },
         }}
       />
     </View>
