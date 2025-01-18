@@ -1,49 +1,53 @@
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import React, { useContext, useEffect, useState } from "react";
+import { View, Text, TouchableOpacity, Alert } from "react-native";
 
-import { Colors } from "../../constants/Colors";
-import { SelectTravelerOptions } from "../../constants/Options";
-import OptionCard from "../../components/CreateTrip/OptionCard";
 import { CreateTripContext } from "../../context/CreateTripContext";
-import { router, Link } from "expo-router";
-const SelectTraveler = () => {
-  const [selectedTravelers, setSelectTravelers] = useState();
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { useContext, useEffect, useState } from "react";
+import OptionCard from "../../components/CreateTrip/OptionCard";
+import { BudgetOptions } from "../../constants/Options";
+import { Colors } from "../../constants/Colors";
+import { router } from "expo-router";
+
+export default function SelectBudget() {
   const { tripData, setTripData } = useContext(CreateTripContext);
-
+  //select option state
+  const [selectedOption, setSelectedOption] = useState();
   useEffect(() => {
-    setTripData({ ...tripData, travelerCount: selectedTravelers });
-  }, [selectedTravelers]);
-
-  useEffect(() => {
-    console.log(tripData);
-  }, [tripData]);
+    selectedOption &&
+      setTripData({
+        ...tripData,
+        budget: selectedOption?.title,
+      });
+  }, [selectedOption]);
+  //on click continue
+  const continuePressed = () => {
+    if (!selectedOption) {
+      Alert.alert("  Select your budget");
+      return;
+    }
+    router.push("/create-trip/review-trip");
+  };
   return (
     <View
       style={{
         padding: 25,
-        paddingTop: 80,
+        paddingTop: 75,
         backgroundColor: Colors.WHITE,
         height: "100%",
       }}
     >
+      {" "}
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
       <Text
         style={{
-          fontSize: 30,
           fontFamily: "outfit-bold",
-          martop: 20,
+          fontSize: 35,
+          marginTop: 20,
         }}
       >
-        Who's Traveling ?
+        Budget
       </Text>
       <View
         style={{
@@ -52,27 +56,26 @@ const SelectTraveler = () => {
       >
         <Text
           style={{
-            fontSize: 20,
             fontFamily: "outfit-bold",
+            fontSize: 20,
           }}
         >
-          Choose Your Travelers
+          Plan Smart, Travel Far
         </Text>
         <FlatList
-          data={SelectTravelerOptions}
+          data={BudgetOptions}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               style={{
                 marginVertical: 10,
               }}
-              onPress={() => setSelectTravelers(item)}
+              onPress={() => setSelectedOption(item)}
             >
-              <OptionCard option={item} selectedOption={selectedTravelers} />
+              <OptionCard option={item} selectedOption={selectedOption} />
             </TouchableOpacity>
           )}
         />
       </View>
-
       <TouchableOpacity
         style={{
           padding: 15,
@@ -80,7 +83,7 @@ const SelectTraveler = () => {
           borderRadius: 15,
           marginTop: 20,
         }}
-        onPress={() => router.push("/create-trip/select-dates")}
+        onPress={continuePressed}
       >
         <Text
           style={{
@@ -96,8 +99,4 @@ const SelectTraveler = () => {
       </TouchableOpacity>
     </View>
   );
-};
-
-export default SelectTraveler;
-
-const styles = StyleSheet.create({});
+}

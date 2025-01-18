@@ -5,7 +5,8 @@
     "jsx": "react-native", // Important for React Native
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "noImplicitAny": false
   },
   "include": [
     "**/*.ts",
