@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TouchableOpacity, Alert, FlatList } from "react-native";
 
 import { CreateTripContext } from "../../context/CreateTripContext";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -36,7 +36,6 @@ export default function SelectBudget() {
         height: "100%",
       }}
     >
-      {" "}
       <TouchableOpacity onPress={() => router.back()}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>

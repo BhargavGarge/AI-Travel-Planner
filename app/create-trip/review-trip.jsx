@@ -48,13 +48,13 @@ export default function ReviewTrip() {
         {/* Destination */}
         <View
           style={{
-            marginTop: 20,
+            marginTop: 40,
             display: "flex",
             flexDirection: "row",
             gap: 20,
           }}
         >
-          <Ionicons name="location-sharp" size={34} color="black" />
+          <Text style={{ fontFamily: "outfit", fontSize: 35 }}> 📍</Text>
           <View>
             <Text style={{ fontFamily: "outfit", fontSize: 20 }}>
               Destination
@@ -68,13 +68,13 @@ export default function ReviewTrip() {
         {/* Travel Dates */}
         <View
           style={{
-            marginTop: 20,
+            marginTop: 40,
             display: "flex",
             flexDirection: "row",
             gap: 20,
           }}
         >
-          <Ionicons name="calendar-sharp" size={34} color="black" />
+          <Text style={{ fontFamily: "outfit", fontSize: 35 }}> 📆</Text>
           <View>
             <Text style={{ fontFamily: "outfit", fontSize: 20 }}>
               Travel Dates
@@ -90,16 +90,15 @@ export default function ReviewTrip() {
         {/* Budget */}
         <View
           style={{
-            marginTop: 20,
+            marginTop: 40,
             display: "flex",
             flexDirection: "row",
             gap: 20,
           }}
         >
-          <Ionicons name="cash-sharp" size={34} color="black" />
+          <Text style={{ fontFamily: "outfit", fontSize: 35 }}> 💸</Text>
           <View>
             <Text style={{ fontFamily: "outfit", fontSize: 20 }}>
-              {" "}
               Selected Budget
             </Text>
             <Text style={{ fontFamily: "outfit-medium", fontSize: 20 }}>
@@ -111,16 +110,15 @@ export default function ReviewTrip() {
         {/* Travel */}
         <View
           style={{
-            marginTop: 20,
+            marginTop: 40,
             display: "flex",
             flexDirection: "row",
             gap: 20,
           }}
         >
-          <Ionicons name="airplane-sharp" size={34} color="black" />
+          <Text style={{ fontFamily: "outfit", fontSize: 35 }}>✈️</Text>
           <View>
             <Text style={{ fontFamily: "outfit", fontSize: 20 }}>
-              {" "}
               Who is Traveling
             </Text>
             <Text style={{ fontFamily: "outfit-medium", fontSize: 20 }}>
@@ -129,34 +127,15 @@ export default function ReviewTrip() {
           </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={{
-          padding: 15,
-          backgroundColor: Colors.PRIMARY,
-          borderRadius: 15,
-          marginTop: 20,
-        }}
-        onPress={() => router.push("/create-trip/select-dates")}
-      >
-        <Text
-          style={{
-            color: Colors.WHITE,
-            textAlign: "center",
 
-            fontFamily: "outfit-medium",
-            fontSize: 20,
-          }}
-        >
-          Continue
-        </Text>
-      </TouchableOpacity>{" "}
       <TouchableOpacity
         style={{
           padding: 15,
           backgroundColor: Colors.PRIMARY,
           borderRadius: 15,
-          marginTop: 20,
+          marginTop: 40,
         }}
+        onPress={() => router.replace("/create-trip/generate-trip")}
       >
         <Text
           style={{
