@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
     "@geocodeearth/autocomplete-element": "^0.7.0",
+    "@google/generative-ai": "^0.21.0",
     "@react-native-async-storage/async-storage": "^1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
@@ -35,6 +36,7 @@
     "expo-system-ui": "~4.0.7",
     "expo-web-browser": "~14.0.2",
     "firebase": "^11.1.0",
+    "firebase-admin": "^13.0.2",
     "moment": "^2.30.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",

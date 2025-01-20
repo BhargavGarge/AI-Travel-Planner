@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { initializeAuth, getReactNativePersistence } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getFirestore } from "firebase/firestore";
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -13,10 +14,26 @@ const firebaseConfig = {
   measurementId: "G-5P8TW7NB3Q",
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+// Initialize Firebase App (Ensure it's not already initialized)
+let app;
+if (!global.firebaseApp) {
+  app = initializeApp(firebaseConfig);
+  global.firebaseApp = app; // Store the app instance globally
+} else {
+  app = global.firebaseApp; // Reuse the already initialized app
+}
 
-// Initialize Firebase Auth with persistence
-export const auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+// Initialize Firebase Auth (Only once)
+let auth;
+if (!global.firebaseAuth) {
+  auth = initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage),
+  });
+  global.firebaseAuth = auth;
+} else {
+  auth = global.firebaseAuth;
+}
+
+// Initialize Firestore
+export const db = getFirestore(app);
+export { app, auth };
