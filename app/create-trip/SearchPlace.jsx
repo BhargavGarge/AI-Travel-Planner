@@ -8,9 +8,9 @@ import { CreateTripContext } from "../../context/CreateTripContext";
 export default function SearchPlace() {
   const navigation = useNavigation();
   const { tripData, setTripData } = useContext(CreateTripContext);
-  useEffect(() => {
-    console.log(tripData);
-  }, [tripData]);
+  // useEffect(() => {
+  //   console.log(tripData);
+  // }, [tripData]);
   return (
     <View
       style={{
