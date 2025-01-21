@@ -36,7 +36,7 @@ const TripDetails = () => {
         }}
         source={{
           uri: tripData.locationInfo?.photoRef
-            ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${tripData.locationInfo.photoRef}&key=AIzaSyBm5jM91_PYfxlFvgzP_gnVJw7ilyHQ7xw`
+            ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${tripData.locationInfo.photoRef}&key=`
             : "https://via.placeholder.com/120", // Fallback image
         }}
       />
