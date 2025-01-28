@@ -49,7 +49,7 @@ export default function SearchPlace() {
           router.push("/create-trip/select-traveler");
         }}
         query={{
-          key: "AIzaSyBm5jM91_PYfxlFvgzP_gnVJw7ilyHQ7xw",
+          key: "",
           language: "en",
         }}
         styles={{
