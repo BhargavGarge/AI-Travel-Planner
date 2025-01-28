@@ -1,6 +1,6 @@
 import { View, Text, Image } from "react-native";
-import React from "react";
-import { GooglePhotoRef } from "../../app/services/GooglePlaceAPi";
+import React, { useEffect, useState } from "react";
+import GooglePhotoRef from "../../app/services/GooglePlaceAPi";
 
 const HotelCard = ({ item }) => {
   const [photoRef, setPhotoRef] = useState();
@@ -8,9 +8,13 @@ const HotelCard = ({ item }) => {
     getGooglePhotoRef();
   }, []);
   const getGooglePhotoRef = async () => {
-    const res = await GooglePhotoRef(item.hotelName);
-    setPhotoRef(res);
+    const result = await GooglePhotoRef(item?.hotel_name);
+    if (result?.results?.[0]?.photos?.[0]?.photo_reference) {
+      setPhotoRef(result.results[0].photos[0].photo_reference);
+    }
   };
+  if (!item) return null; // Handle missing item gracefully
+
   return (
     <View
       style={{
@@ -37,31 +41,31 @@ const HotelCard = ({ item }) => {
         <Text
           style={{
             fontSize: 16,
-            fontFamily: "otfit-medium",
+            fontFamily: "outfit-medium",
           }}
         >
-          {item.hotelName}
+          {item.hotel_name || "Unnamed Hotel"}
         </Text>
         <View
           style={{
-            display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
+            marginTop: 5,
           }}
         >
           <Text
             style={{
-              fontFamily: "otfit-medium",
+              fontFamily: "outfit-medium",
             }}
           >
-            ⭐ {item.rating}
+            ⭐ {item.rating || "N/A"}
           </Text>
           <Text
             style={{
-              fontFamily: "otfit-medium",
+              fontFamily: "outfit-medium",
             }}
           >
-            💰 {item.example_price}
+            💰 {item.price_per_night || "Price Unavailable"}
           </Text>
         </View>
       </View>

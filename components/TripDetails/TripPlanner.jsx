@@ -1,43 +1,26 @@
-import { View, Text } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import React from "react";
-import { Colors } from "../../constants/Colors";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import PlacedCard from "./PlacedCard";
+import PlacedCard from "../TripDetails/PlacedCard";
 
-const TripPlanner = ({ details }) => {
+const TripPlanner = ({ details = [] }) => {
+  if (!details || details.length === 0) {
+    return <Text>No places to visit found.</Text>; // Handle no places scenario
+  }
+
   return (
-    <View
-      style={{
-        marginTop: 20,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 20,
-          fontFamily: "outfit-bold",
-        }}
-      >
-        Plans Details
+    <ScrollView style={{ marginTop: 20, paddingHorizontal: 10 }}>
+      <Text style={{ fontSize: 20, fontFamily: "outfit-bold" }}>
+        Plan Details
       </Text>
-      {Object.entries(details)
-        .reverse()
-        .map(([day, details]) => {
-          <View>
-            <Text
-              style={{
-                fontFamily: "outfit-medium",
-                fontSize: 20,
-                marginTop: 20,
-              }}
-            >
-              {day.charAt(0).toUpperCase() + day.slice(1)}
-            </Text>
-            {details.plan.map((place, index) => (
-              <PlacedCard place={place} key={index} />
-            ))}
-          </View>;
-        })}
-    </View>
+      <Text
+        style={{ fontSize: 18, fontFamily: "outfit-medium", marginTop: 10 }}
+      >
+        Places to Visit:
+      </Text>
+      {details.map((place, index) => (
+        <PlacedCard key={index} place={place} />
+      ))}
+    </ScrollView>
   );
 };
 

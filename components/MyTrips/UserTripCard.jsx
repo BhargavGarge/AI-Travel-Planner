@@ -41,7 +41,7 @@ const UserTripCard = ({ trip }) => {
         <Text
           style={{ fontFamily: "outfit", fontSize: 14, color: Colors.GRAY }}
         >
-          {moment(tripData.startDate).format("DD MMM YYYY")} -{" "}
+          {moment(tripData.startDate).format("DD MMM YYYY")} -
           {moment(tripData.endDate).format("DD MMM YYYY")}
         </Text>
 

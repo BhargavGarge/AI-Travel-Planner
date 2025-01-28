@@ -1,13 +1,13 @@
-import { View, Text, FlatList, Image } from "react-native";
-import React from "react";
-import { GooglePhotoRef } from "../../app/services/GooglePlaceAPi";
+import { View, Text, FlatList } from "react-native";
+import React, { useDebugValue, useEffect } from "react";
 import HotelCard from "./HotelCard";
 
-const HotelList = ({ hotelList }) => {
+const HotelList = ({ hotelList = [] }) => {
   return (
     <View
       style={{
         marginTop: 20,
+        paddingHorizontal: 10,
       }}
     >
       <Text
@@ -16,19 +16,32 @@ const HotelList = ({ hotelList }) => {
           fontFamily: "outfit-bold",
         }}
       >
-        🏨 Hotel Recommendation
+        🏨 Hotel Recommendations
       </Text>
-      <FlatList
-        style={{
-          marginTop: 7,
-        }}
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        data={hotelList}
-        renderItem={({ item, index }) => {
-          <HotelCard item={item} />;
-        }}
-      />
+      {hotelList.length > 0 ? (
+        <FlatList
+          style={{
+            marginTop: 10,
+          }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={hotelList}
+          keyExtractor={(item, index) => `${item.hotel_name}-${index}`} // Unique keys
+          renderItem={({ item }) => <HotelCard item={item} />}
+        />
+      ) : (
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: "outfit-medium",
+            color: "#555",
+            marginTop: 20,
+            textAlign: "center",
+          }}
+        >
+          No hotel recommendations available.
+        </Text>
+      )}
     </View>
   );
 };

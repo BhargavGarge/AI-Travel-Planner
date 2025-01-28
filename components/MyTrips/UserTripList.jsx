@@ -16,6 +16,11 @@ const UserTripList = ({ userTrips }) => {
   }
 
   console.log("Parsed LatestTrip:", LatestTrip);
+
+  // Log startDate and endDate to debug if they are available
+  console.log("Start Date:", LatestTrip.startDate);
+  console.log("End Date:", LatestTrip.endDate);
+
   return (
     <View>
       <View
@@ -59,7 +64,7 @@ const UserTripList = ({ userTrips }) => {
           <View
             style={{
               flexDirection: "row",
-              justifyContent: "space-between",
+
               display: "flex",
               marginTop: 5,
             }}
@@ -71,7 +76,21 @@ const UserTripList = ({ userTrips }) => {
                 color: Colors.GRAY,
               }}
             >
-              {moment(LatestTrip.startDate).format("DD MMM YYYY")}
+              {moment(LatestTrip.startDate).isValid()
+                ? moment(LatestTrip.startDate).format("DD MMM YYYY")
+                : "Start Date not available"}
+            </Text>
+            <Text
+              style={{
+                fontFamily: "outfit",
+                fontSize: 17,
+                color: Colors.GRAY,
+              }}
+            >
+              -
+              {moment(LatestTrip.endDate).isValid()
+                ? moment(LatestTrip.endDate).format("DD MMM YYYY")
+                : "End Date not available"}
             </Text>
           </View>
           <TouchableOpacity
@@ -81,14 +100,18 @@ const UserTripList = ({ userTrips }) => {
               borderRadius: 15,
               marginTop: 10,
             }}
-            onPress={() =>
-              router.push({
-                pathname: "/trip-detail",
-                params: {
-                  trip: JSON.stringify(userTrips[0]),
-                },
-              })
-            }
+            onPress={() => {
+              if (userTrips[0]) {
+                router.push({
+                  pathname: "/trip-detail",
+                  params: {
+                    trip: JSON.stringify(userTrips[0]), // Serialize only valid objects
+                  },
+                });
+              } else {
+                console.error("Error: No trip data available to navigate.");
+              }
+            }}
           >
             <Text
               style={{

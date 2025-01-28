@@ -53,6 +53,7 @@ const GenerateTrip = () => {
         userEmail: user.email,
         tripPlan: tripRes,
         tripData: JSON.stringify(tripData),
+        createdAt: new Date(),
         docId: docId,
       });
 

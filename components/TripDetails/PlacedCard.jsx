@@ -1,7 +1,7 @@
-import { View, Text, Image } from "react-native";
+import { Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
-import { GooglePhotoRef } from "../../app/services/GooglePlaceAPi";
+import GooglePhotoRef from "../../app/services/GooglePlaceAPi";
 
 const PlacedCard = ({ place }) => {
   const [photoRef, setPhotoRef] = useState();
@@ -9,8 +9,10 @@ const PlacedCard = ({ place }) => {
     getGooglePhotoRef();
   }, []);
   const getGooglePhotoRef = async () => {
-    const res = await GooglePhotoRef(place.placeName);
-    setPhotoRef(res);
+    const result = await GooglePhotoRef(place?.place_name);
+    if (result?.results?.[0]?.photos?.[0]?.photo_reference) {
+      setPhotoRef(result.results[0].photos[0].photo_reference);
+    }
   };
   return (
     <View
@@ -33,27 +35,19 @@ const PlacedCard = ({ place }) => {
           uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoRef}&key=`,
         }}
       />
-      <View
-        style={{
-          marginTop: 5,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 20,
-            fontFamily: "outfit-bold",
-          }}
-        >
-          {place?.placeName}
+      <View style={{ marginTop: 5 }}>
+        <Text style={{ fontSize: 20, fontFamily: "outfit-bold" }}>
+          {place?.place_name || "Unknown Place"} {/* Accessing place_name */}
         </Text>
         <Text
           style={{
-            fontSize: 20,
+            fontSize: 18,
             fontFamily: "outfit-bold",
             color: Colors.GRAY,
+            marginTop: 5,
           }}
         >
-          {place.placeDetails}
+          {place?.place_details || "No details available"}
         </Text>
         <View
           style={{
@@ -61,55 +55,17 @@ const PlacedCard = ({ place }) => {
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
+            marginTop: 10,
           }}
         >
           <View>
-            <Text
-              style={{
-                fontSize: 17,
-                fontFamily: "outfit",
-                marginTop: 5,
-              }}
-            >
-              🎟️ {TicketPrice}
-              <Text
-                style={{
-                  fontSize: 17,
-                  fontFamily: "outfit-bold",
-                  marginTop: 5,
-                }}
-              >
-                {0}
-              </Text>
-            </Text>
-            <Text
-              style={{
-                fontSize: 17,
-                fontFamily: "outfit",
-                marginTop: 5,
-              }}
-            >
-              ⌛ {timetoTravel}
-              <Text
-                style={{
-                  fontSize: 17,
-                  fontFamily: "outfit-bold",
-                  marginTop: 5,
-                }}
-              >
-                {0}
+            <Text style={{ fontSize: 17, fontFamily: "outfit", marginTop: 5 }}>
+              🎟️ Ticket Price:
+              <Text style={{ fontFamily: "outfit-bold" }}>
+                {place?.ticket_pricing || "N/A"}
               </Text>
             </Text>
           </View>
-          <TouchableOpacity
-            style={{
-              backgroundColor: Colors.PRIMARY,
-              padding: 5,
-              borderRadius: 7,
-            }}
-          >
-            <Ionicons name="navigate" size={20} color="white" />
-          </TouchableOpacity>
         </View>
       </View>
     </View>
